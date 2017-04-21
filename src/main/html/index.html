@@ -41,6 +41,15 @@
         url = "http://petstore.swagger.io/v2/swagger.json";
       }
 
+      var validatorUrl = window.location.search.match(/validatorUrl=([^&]+)/);
+      if (validatorUrl && validatorUrl.length > 1) {
+        validatorUrl = decodeURIComponent(validatorUrl[1]);
+	if (validatorUrl === "null")
+		validatorUrl = null;
+      } else {
+        validatorUrl = undefined;
+      }
+
       hljs.configure({
         highlightSizeThreshold: 5000
       });
@@ -51,6 +60,7 @@
       }
       window.swaggerUi = new SwaggerUi({
         url: url,
+	validatorUrl: validatorUrl,
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
         onComplete: function(swaggerApi, swaggerUi){
